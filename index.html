@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures proper scaling on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book a consultation with OrthoNow's expert orthopaedic specialists across Bengaluru, Hyderabad, and Chennai. Same-week appointments available." />
+  <title>OrthoNow – Book Your Orthopaedic Consultation</title>
+
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* System font stack — no external font load = faster PageSpeed */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                   Helvetica, Arial, sans-serif;
+      background: #f7f8fa;
+      color: #1a1a2e;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ─── COLOR TOKENS ─────────────────────────────────────────── */
+    /* Primary blue — trust, medical, professional */
+    /* --blue:   #1a56db  */
+    /* --blue-d: #1341a8  (hover state) */
+    /* --green:  #0d9f6e  (success / trust badge) */
+    /* --text:   #1a1a2e  */
+    /* --muted:  #6b7280  */
+    /* --light:  #f7f8fa  */
+
+    /* ─── HEADER / HERO ────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      color: #fff;
+      padding: 40px 20px 48px;
+      text-align: center;
+    }
+
+    /* Small brand label above headline */
+    .hero__eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #93c5fd;
+      margin-bottom: 16px;
+    }
+
+    /* Main headline — biggest element on page */
+    .hero__headline {
+      font-size: clamp(26px, 5vw, 42px); /* scales between mobile and desktop */
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    /* Orange accent on key word — draws the eye */
+    .hero__headline span {
+      color: #fb923c;
+    }
+
+    /* Supporting subheadline */
+    .hero__sub {
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: #cbd5e1;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+
+    /* ─── TRUST STRIP (below hero) ─────────────────────────────── */
+    .trust-strip {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 20px;
+    }
+
+    .trust-strip__inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Each trust badge item */
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* Green checkmark circle */
+    .trust-item__icon {
+      width: 20px;
+      height: 20px;
+      background: #0d9f6e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
+    .main {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    /* ─── FORM CARD ─────────────────────────────────────────────── */
+    .form-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      margin-bottom: 28px;
+    }
+
+    .form-card__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+    }
+
+    .form-card__subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
+
+    /* ─── FORM FIELDS ───────────────────────────────────────────── */
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 16px; /* 16px prevents iOS auto-zoom on focus */
+      color: #1a1a2e;
+      background: #f9fafb;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    /* Focus state — visible for accessibility */
+    .field input:focus {
+      border-color: #1a56db;
+      box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.12);
+      background: #fff;
+    }
+
+    /* ─── CTA BUTTON ────────────────────────────────────────────── */
+    .btn-cta {
+      width: 100%;
+      padding: 16px;
+      background: #1a56db;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+    }
+
+    .btn-cta:hover {
+      background: #1341a8;
+    }
+
+    /* Slight press effect on click */
+    .btn-cta:active {
+      transform: scale(0.98);
+    }
+
+    /* Privacy note below button */
+    .form-card__privacy {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 12px;
+    }
+
+    /* ─── THANK YOU STATE ───────────────────────────────────────── */
+    /* Hidden by default — shown after form submit via JS */
+    .thank-you {
+      display: none;
+      text-align: center;
+      padding: 16px 0 8px;
+    }
+
+    .thank-you__icon {
+      width: 64px;
+      height: 64px;
+      background: #ecfdf5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 28px;
+    }
+
+    .thank-you__title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+
+    .thank-you__msg {
+      font-size: 15px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    /* ─── SOCIAL PROOF (Reviews) ────────────────────────────────── */
+    .reviews {
+      margin-bottom: 28px;
+    }
+
+    .reviews__title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    /* Individual review card */
+    .review-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      border-left: 3px solid #1a56db;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .review-card__stars {
+      color: #f59e0b;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .review-card__text {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .review-card__author {
+      font-size: 12px;
+      font-weight: 600;
+      color: #9ca3af;
+    }
+
+    /* ─── DOCTOR CREDENTIALS ────────────────────────────────────── */
+    .credentials {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 28px;
+    }
+
+    .credentials__title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    /* Doctor row */
+    .doctor {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .doctor:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    /* Avatar circle with initials */
+    .doctor__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a56db, #0f3460);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .doctor__name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+
+    .doctor__spec {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      padding: 0 20px 32px;
+    }
+
+    /* ─── MOBILE OPTIMIZATIONS ──────────────────────────────────── */
+    @media (max-width: 400px) {
+      .form-card {
+        padding: 24px 20px;
+      }
+
+      .trust-strip__inner {
+        gap: 14px;
+      }
+    }
+
+    /* ─── REDUCED MOTION ────────────────────────────────────────── */
+    /* Respect user's OS setting for reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .btn-cta {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ HERO SECTION ══════════════════════════════════════════ -->
+  <header class="hero">
+    <span class="hero__eyebrow">9 Clinics · Bengaluru, Hyderabad &amp; Chennai</span>
+
+    <h1 class="hero__headline">
+      Get an expert opinion on your<br>
+      <span>knee or back pain</span> — today.
+    </h1>
+
+    <p class="hero__sub">
+      Skip the wait. OrthoNow's specialists are available this week.
+      Most consultations confirmed within 2 hours.
+    </p>
+  </header>
+
+  <!-- ═══ TRUST STRIP ═══════════════════════════════════════════ -->
+  <div class="trust-strip">
+    <div class="trust-strip__inner">
+
+      <div class="trust-item">
+        <div class="trust-item__icon">✓</div>
+        10,000+ patients treated
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item__icon">✓</div>
+        Same-week appointments
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item__icon">✓</div>
+        No referral needed
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ MAIN CONTENT ══════════════════════════════════════════ -->
+  <main class="main">
+
+    <!-- ── BOOKING FORM CARD ───────────────────────────────────── -->
+    <div class="form-card">
+      <h2 class="form-card__title">Book your free consultation</h2>
+      <p class="form-card__subtitle">We'll call you within 2 hours to confirm your slot.</p>
+
+      <!-- FORM — id used by JS to attach submit listener -->
+      <div id="form-section">
+
+        <!-- Name field -->
+        <div class="field">
+          <label for="patient-name">Your name</label>
+          <input
+            type="text"
+            id="patient-name"
+            name="name"
+            placeholder="Rahul Sharma"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <!-- Phone field -->
+        <div class="field">
+          <label for="patient-phone">Mobile number</label>
+          <input
+            type="tel"
+            id="patient-phone"
+            name="phone"
+            placeholder="+91 98765 43210"
+            autocomplete="tel"
+            inputmode="tel"
+            required
+          />
+        </div>
+
+        <!-- CTA Button — triggers JS on click -->
+        <button class="btn-cta" id="submit-btn" type="button">
+          Book My Consultation →
+        </button>
+
+        <p class="form-card__privacy">🔒 Your details are private. No spam, ever.</p>
+
+      </div><!-- end #form-section -->
+
+      <!-- THANK YOU STATE — hidden until form submitted -->
+      <div class="thank-you" id="thank-you">
+        <div class="thank-you__icon">✅</div>
+        <h3 class="thank-you__title">You're booked in!</h3>
+        <p class="thank-you__msg">
+          Our team will call you within 2 hours to confirm your consultation slot.
+          Check your phone — we'll be in touch shortly.
+        </p>
+      </div>
+
+    </div><!-- end .form-card -->
+
+    <!-- ── PATIENT REVIEWS ─────────────────────────────────────── -->
+    <div class="reviews">
+      <p class="reviews__title">What patients say</p>
+
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">
+          "I'd been ignoring my knee pain for 2 years. Booked with OrthoNow on a Monday,
+          had a diagnosis by Wednesday. Wish I'd done this sooner."
+        </p>
+        <span class="review-card__author">Priya M. · Software Engineer, Bengaluru</span>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">
+          "The doctor actually listened and explained everything clearly.
+          No unnecessary tests, straight to the point treatment plan."
+        </p>
+        <span class="review-card__author">Arun K. · Manager, Hyderabad</span>
+      </div>
+
+    </div><!-- end .reviews -->
+
+    <!-- ── DOCTOR CREDENTIALS ─────────────────────────────────── -->
+    <div class="credentials">
+      <p class="credentials__title">Our specialists</p>
+
+      <div class="doctor">
+        <div class="doctor__avatar">SR</div>
+        <div>
+          <p class="doctor__name">Dr. Suresh Rao</p>
+          <p class="doctor__spec">MS Orthopaedics · 18 years exp. · Knee &amp; Hip</p>
+        </div>
+      </div>
+
+      <div class="doctor">
+        <div class="doctor__avatar">MP</div>
+        <div>
+          <p class="doctor__name">Dr. Meena Pillai</p>
+          <p class="doctor__spec">DNB Orthopaedics · 12 years exp. · Spine &amp; Back</p>
+        </div>
+      </div>
+
+      <div class="doctor">
+        <div class="doctor__avatar">AV</div>
+        <div>
+          <p class="doctor__name">Dr. Arvind Venkat</p>
+          <p class="doctor__spec">FRCS (Edin) · 22 years exp. · Sports Injuries</p>
+        </div>
+      </div>
+
+    </div><!-- end .credentials -->
+
+  </main><!-- end .main -->
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <p>OrthoNow Healthcare Pvt. Ltd. · 9 clinics across South India</p>
+    <p style="margin-top:4px;">© 2026 OrthoNow. All rights reserved.</p>
+  </footer>
+
+
+  <!-- ═══ JAVASCRIPT ════════════════════════════════════════════ -->
+  <script>
+    // ── Initialize dataLayer array ──────────────────────────────
+    // GTM looks for window.dataLayer on page load.
+    // We create it here if it doesn't already exist.
+    window.dataLayer = window.dataLayer || [];
+
+    // ── Get references to DOM elements ─────────────────────────
+    var submitBtn   = document.getElementById('submit-btn');
+    var nameInput   = document.getElementById('patient-name');
+    var phoneInput  = document.getElementById('patient-phone');
+    var formSection = document.getElementById('form-section');
+    var thankYou    = document.getElementById('thank-you');
+
+    // ── Validate Indian phone number (basic) ────────────────────
+    // Accepts formats: 9876543210 / +919876543210 / 09876543210
+    function isValidPhone(phone) {
+      var cleaned = phone.replace(/[\s\-\(\)]/g, ''); // strip spaces/dashes
+      return /^(\+91|0)?[6-9]\d{9}$/.test(cleaned);
+    }
+
+    // ── Handle form submission ──────────────────────────────────
+    submitBtn.addEventListener('click', function () {
+
+      var name  = nameInput.value.trim();
+      var phone = phoneInput.value.trim();
+
+      // Basic validation — name must not be empty
+      if (!name) {
+        nameInput.focus();
+        nameInput.style.borderColor = '#ef4444'; // red border
+        return;
+      }
+
+      // Phone validation
+      if (!isValidPhone(phone)) {
+        phoneInput.focus();
+        phoneInput.style.borderColor = '#ef4444';
+        return;
+      }
+
+      // ── GTM dataLayer push ────────────────────────────────────
+      // This fires the conversion event that GTM listens for.
+      // DO NOT fire this on page load — only on valid form submit.
+      // GA4 and Google Ads read this event for conversion tracking.
+      window.dataLayer.push({
+        event: 'consultation_form_submitted',   // event name GTM listens for
+        form_name: 'orthonow_consultation',     // which form on the site
+        clinic_preference: 'Not specified',     // no clinic selector on this form
+        page_location: window.location.href,    // full URL of the landing page
+        page_title: document.title              // page title for GA4 context
+      });
+
+      // Log to console so you can demo this in the Loom video
+      console.log('✅ dataLayer push fired:', window.dataLayer[window.dataLayer.length - 1]);
+
+      // ── Swap form → thank you (no page reload) ─────────────────
+      formSection.style.display = 'none';   // hide the form
+      thankYou.style.display    = 'block';  // show thank you message
+
+    });
+
+    // ── Reset border color on input focus ──────────────────────
+    // Removes red border when user starts correcting their input
+    nameInput.addEventListener('focus', function () {
+      nameInput.style.borderColor = '';
+    });
+    phoneInput.addEventListener('focus', function () {
+      phoneInput.style.borderColor = '';
+    });
+
+  </script>
+
+</body>
+</html>
